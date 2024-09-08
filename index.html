@@ -355,6 +355,7 @@
         <p id="quest-reward" onclick="makeEditable(this)"></p>
         <p id="quest-class-tag" onclick="makeEditable(this)"></p>
         <p id="quest-punishment" onclick="makeEditable(this)"></p>
+        <p id="quest-streak" onclick="makeEditable(this)">Streak: 0</p> <!-- Streak Display & Editable -->
         
         <!-- Flexbox container for buttons -->
         <div class="button-container">
@@ -366,7 +367,6 @@
         </div>
     </div>
 </div>
-
 <script>
 // Function to make a text element editable
 function makeEditable(element) {
@@ -388,8 +388,8 @@ function makeEditable(element) {
 // Function to save changes made to the text
 function saveChanges(event) {
     const element = event.target;
-    const questIndex = element.dataset.questIndex;  // Get the quest index
-    const quest = quests[questIndex];  // Retrieve the specific quest
+    const questIndex = element.dataset.questIndex;
+    const quest = quests[questIndex];
 
     element.contentEditable = "false";
 
@@ -404,11 +404,14 @@ function saveChanges(event) {
         quest.classTag = element.innerText.replace('Class Tag: ', '');
     } else if (element.id === 'quest-punishment') {
         quest.punishment = element.innerText.replace('Punishment: ', '');
+    } else if (element.id === 'quest-streak') {
+        quest.streakCount = parseInt(element.innerText.replace('Streak: ', '')) || 0; // Update streak
     }
 
     saveQuestsToLocalStorage();
     console.log("Updated quest:", quest);
 }
+
 
 </script>
 
