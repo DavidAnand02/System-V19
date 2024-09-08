@@ -562,14 +562,13 @@ function displayQuestLog() {
             countdownHtml += `<p><strong>Daily Timer:</strong> ${dailyTimeLeft}</p>`;
         }
 
-questItem.innerHTML = `
-    <h3>${quest.title}</h3>
-    <p><strong>Reward:</strong> ${quest.reward || 'None'}</p>
-    <p><strong>Punishment:</strong> ${quest.punishment || 'None'}</p>
-    ${quest.activationTime ? `<p><strong>Streak:</strong> ${quest.streakCount || 0}</p>` : ''}
-    ${countdownHtml}
-`;
-
+        questItem.innerHTML = `
+            <h3>${quest.title}</h3>
+            <p><strong>Reward:</strong> ${quest.reward || 'None'}</p>
+            <p><strong>Punishment:</strong> ${quest.punishment || 'None'}</p>
+            ${quest.activationTime ? `<p><strong>Streak:</strong> ${quest.streakCount || 0}</p>` : ''}
+            ${countdownHtml}
+        `;
 
         questItem.onclick = () => showQuestInfo(quest);
 
@@ -631,6 +630,7 @@ function showQuestInfo(quest) {
     const questRewardElement = document.getElementById('quest-reward');
     const questClassTagElement = document.getElementById('quest-class-tag');
     const questPunishmentElement = document.getElementById('quest-punishment');
+    const questStreakElement = document.getElementById('quest-streak');  // New
 
     // Set initial values
     questTitleElement.innerText = quest.title;
@@ -638,6 +638,7 @@ function showQuestInfo(quest) {
     questRewardElement.innerText = `Reward: ${quest.reward || 'None'}`;
     questClassTagElement.innerText = `Class Tag: ${quest.classTag || 'None'}`;
     questPunishmentElement.innerText = `Punishment: ${quest.punishment || 'None'}`;
+    questStreakElement.innerText = `Streak: ${quest.streakCount || 0}`;  // Set streak value
 
     // Attach quest index to each editable element
     questTitleElement.dataset.questIndex = questIndex;
@@ -645,11 +646,11 @@ function showQuestInfo(quest) {
     questRewardElement.dataset.questIndex = questIndex;
     questClassTagElement.dataset.questIndex = questIndex;
     questPunishmentElement.dataset.questIndex = questIndex;
+    questStreakElement.dataset.questIndex = questIndex;  // New
 
     // Set the dataset quest index on the quest-info element
     document.getElementById('quest-info').dataset.questIndex = questIndex;
 
-    // Conditionally show the "Move to Active" button
     const moveToActiveButton = document.querySelector('button[onclick="moveQuestToActive()"]');
     if (quest.status === 'completed' || quest.status === 'failed') {
         moveToActiveButton.style.display = 'block';
